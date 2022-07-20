@@ -13,43 +13,67 @@
     <link rel="stylesheet" href="{% static 'main.css' %}" />
   </head>
   <body>
-    <h1>Tasks.</h1>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4 offset-md-4">
+          <h1 class="display-5 fw-bold">Tasks.</h1>
+          <div class="card card-body bg-secondary">
+            <form action="{% url 'create_task' %}" method="post">
+              {% csrf_token %}
+              <label for="title">Title:</label>
+              <input
+                type="text"
+                name="title"
+                id="title"
+                placeholder="Write a title."
+                class="form-control mb-2"
+              />
+              <label for="description">Description:</label>
+              <textarea
+                name="description"
+                rows="3"
+                placeholder="Write a description."
+                class="form-control mb-2"
+              ></textarea>
+              <button class="btn btn-success">Save</button>
+            </form>
 
-    <form action="{% url 'create_task' %}" method="post">
-      {% csrf_token %}
-      <input type="text" name="title" id="title" placeholder="Write a title." />
-      <textarea
-        name="description"
-        rows="3"
-        placeholder="Write a description."
-      ></textarea>
-      <button>Save</button>
-    </form>
-
-    {% for task in tasks %}
-    <div>
-      <form action="{% url 'update_task' task.id %}" method="post">
-        {% csrf_token %}
-        <input
-          name="title"
-          id="title"
-          type="text"
-          placeholder="{{task.title}}"
-        />
-        <textarea
-          name="description"
-          rows="3"
-          placeholder="{{task.description}}"
-        ></textarea>
-        <button>Update</button>
-      </form>
-      <form action="{% url 'delete_task' task.id %}" method="post">
-        {% csrf_token %}
-        <button>Delete</button>
-      </form>
+            {% for task in tasks %}
+            <div class="mt-2 d-flex flex-row justify-content-between">
+              <form
+                action="{% url 'update_task' task.id %}"
+                method="post"
+                class="mt-2"
+              >
+                {% csrf_token %}
+                <label for="title">Title:</label>
+                <input
+                  name="title"
+                  id="title"
+                  type="text"
+                  placeholder="{{task.title}}"
+                  class="form-control mb-2"
+                />
+                <label for="description">Description:</label>
+                <textarea
+                  name="description"
+                  rows="3"
+                  placeholder="{{task.description}}"
+                  class="form-control mb-2"
+                ></textarea>
+                <button>Update</button>
+              </form>
+              <form action="{% url 'delete_task' task.id %}" method="post">
+                {% csrf_token %}
+                <button class="btn btn-danger">Delete</button>
+              </form>
+            </div>
+            {% empty %}
+            <h1 class="display-4 text-center">There aren't tasks yet.</h1>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
     </div>
-    {% empty %}
-    <h1>There aren't tasks yet.</h1>
-    {% endfor %}
   </body>
 </html>
