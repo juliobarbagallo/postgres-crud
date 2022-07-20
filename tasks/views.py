@@ -1,3 +1,4 @@
+from asyncio import tasks
 from django.shortcuts import render, redirect
 from .models import Task
 
@@ -5,7 +6,10 @@ from .models import Task
 
 
 def list_tasks(request):
-    return render(request, 'list_tasks.html')
+    tasks = Task.objects.all()
+    print(tasks)
+    return render(request, 'list_tasks.html', {'tasks': tasks})
+    # return render(request, 'list_tasks.html')
 
 
 def create_task(request):

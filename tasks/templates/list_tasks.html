@@ -15,7 +15,7 @@
   <body>
     <h1>Tasks.</h1>
 
-    <form action="/tasks/add/" method="post">
+    <form action="{% url 'create_task' %}" method="post">
       {% csrf_token %}
       <input type="text" name="title" id="title" placeholder="Write a title." />
       <textarea
@@ -25,5 +25,15 @@
       ></textarea>
       <button>Save</button>
     </form>
+
+    {% for task in tasks %}
+    <div>
+      <h4>{{task.title}}</h4>
+      <p>{{task.description}}</p>
+      <button>Delete</button>
+    </div>
+    {% empty %}
+    <h1>There aren't tasks yet.</h1>
+    {% endfor %}
   </body>
 </html>
