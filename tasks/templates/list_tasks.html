@@ -28,8 +28,21 @@
 
     {% for task in tasks %}
     <div>
-      <h4>{{task.title}}</h4>
-      <p>{{task.description}}</p>
+      <form action="{% url 'update_task' task.id %}" method="post">
+        {% csrf_token %}
+        <input
+          name="title"
+          id="title"
+          type="text"
+          placeholder="{{task.title}}"
+        />
+        <textarea
+          name="description"
+          rows="3"
+          placeholder="{{task.description}}"
+        ></textarea>
+        <button>Update</button>
+      </form>
       <form action="{% url 'delete_task' task.id %}" method="post">
         {% csrf_token %}
         <button>Delete</button>
