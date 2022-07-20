@@ -14,5 +14,16 @@
   </head>
   <body>
     <h1>Tasks.</h1>
+
+    <form action="/tasks/add/" method="post">
+      {% csrf_token %}
+      <input type="text" name="title" id="title" placeholder="Write a title." />
+      <textarea
+        name="description"
+        rows="3"
+        placeholder="Write a description."
+      ></textarea>
+      <button>Save</button>
+    </form>
   </body>
 </html>
