@@ -30,7 +30,10 @@
     <div>
       <h4>{{task.title}}</h4>
       <p>{{task.description}}</p>
-      <button>Delete</button>
+      <form action="{% url 'delete_task' task.id %}" method="post">
+        {% csrf_token %}
+        <button>Delete</button>
+      </form>
     </div>
     {% empty %}
     <h1>There aren't tasks yet.</h1>

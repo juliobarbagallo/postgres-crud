@@ -17,3 +17,9 @@ def create_task(request):
     Task(title=request.POST['title'],
          description=request.POST['description']).save()
     return redirect('list_tasks')
+
+
+def delete_task(request, task_id):
+    # print(task_id)
+    Task.objects.get(id=task_id).delete()
+    return redirect('list_tasks')
